@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}
+Struk Pembelian
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-dark text-white text-center">
+
+                    <h3>
+
+                        SMART RETAIL
+
+                    </h3>
+
+                    <small>
+
+                        Struk Pembelian
+
+                    </small>
+
+                </div>
+
+                <div class="card-body">
+
+                    <!-- =============================== -->
+                    <!-- Informasi Transaksi -->
+                    <!-- =============================== -->
+
+                    <table class="table table-borderless">
+
+                        <tr>
+
+                            <td width="35%">
+
+                                Nomor Transaksi
+
+                            </td>
+
+                            <td>
+
+                                : {{ nomor }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+
+                                Tanggal
+
+                            </td>
+
+                            <td>
+
+                                : {{ transaksi.tanggal }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <td>
+
+                                Kasir
+
+                            </td>
+
+                            <td>
+
+                                : {{ transaksi.username }}
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                    <hr>
+
+                    <!-- =============================== -->
+                    <!-- Detail Barang -->
+                    <!-- =============================== -->
+
+                    <table class="table table-bordered">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>Produk</th>
+
+                                <th>Harga</th>
+
+                                <th>Qty</th>
+
+                                <th>Subtotal</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in detail %}
+
+                            <tr>
+
+                                <td>
+
+                                    {{ item.nama_produk }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ format_rupiah(item.harga_jual) }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ item.jumlah }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ format_rupiah(item.subtotal) }}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    <hr>
+
+                    <!-- =============================== -->
+                    <!-- Ringkasan Pembayaran -->
+                    <!-- =============================== -->
+
+                    <table class="table">
+
+                        <tr>
+
+                            <th>Total Belanja</th>
+
+                            <td class="text-end">
+
+                                {{ format_rupiah(transaksi.total_bayar) }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Uang Dibayar</th>
+
+                            <td class="text-end">
+
+                                {{ format_rupiah(transaksi.uang_bayar) }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>Kembalian</th>
+
+                            <td class="text-end text-success">
+
+                                <strong>
+
+                                    {{ format_rupiah(transaksi.kembalian) }}
+
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <div class="card-footer d-flex justify-content-between">
+
+                    <a
+
+                        href="{{ url_for('transaksi.halaman_transaksi') }}"
+
+                        class="btn btn-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Transaksi Baru
+
+                    </a>
+
+                    <button
+
+                        onclick="window.print()"
+
+                        class="btn btn-primary">
+
+                        <i class="bi bi-printer"></i>
+
+                        Cetak Struk
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

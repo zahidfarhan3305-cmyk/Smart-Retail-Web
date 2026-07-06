@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}
+Tambah Produk
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h4>
+
+                        <i class="bi bi-plus-circle"></i>
+
+                        Tambah Produk
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('produk.tambah_produk') }}">
+
+                        <!-- Nama Produk -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Nama Produk
+
+                            </label>
+
+                            <input
+
+                                type="text"
+
+                                name="nama_produk"
+
+                                class="form-control"
+
+                                placeholder="Masukkan nama produk"
+
+                                required
+
+                            >
+
+                        </div>
+
+                        <!-- Harga Modal -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Harga Modal
+
+                            </label>
+
+                            <input
+
+                                type="number"
+
+                                name="harga_modal"
+
+                                class="form-control"
+
+                                placeholder="Masukkan harga modal"
+
+                                min="0"
+
+                                required
+
+                            >
+
+                        </div>
+
+                        <!-- Harga Jual -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Harga Jual
+
+                            </label>
+
+                            <input
+
+                                type="number"
+
+                                name="harga_jual"
+
+                                class="form-control"
+
+                                placeholder="Masukkan harga jual"
+
+                                min="0"
+
+                                required
+
+                            >
+
+                        </div>
+
+                        <!-- Stok -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Stok
+
+                            </label>
+
+                            <input
+
+                                type="number"
+
+                                name="stok"
+
+                                class="form-control"
+
+                                placeholder="Masukkan stok"
+
+                                min="0"
+
+                                required
+
+                            >
+
+                        </div>
+
+                        <!-- Tombol -->
+
+                        <div class="d-flex justify-content-between">
+
+                            <a
+
+                                href="{{ url_for('produk.daftar_produk') }}"
+
+                                class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+
+                                Kembali
+
+                            </a>
+
+                            <button
+
+                                type="submit"
+
+                                class="btn btn-primary">
+
+                                <i class="bi bi-save"></i>
+
+                                Simpan
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

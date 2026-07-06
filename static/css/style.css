@@ -1,0 +1,130 @@
+/* ==========================================
+   SMART RETAIL
+========================================== */
+
+body {
+    background-color: #f5f7fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.list-group-item {
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12);
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+.table {
+    background: white;
+}
+
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.badge {
+    font-size: 0.9rem;
+}
+
+.form-control {
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 8px rgba(13, 110, 253, .25);
+}
+
+.alert {
+    border-radius: 10px;
+}
+
+.login-card {
+    margin-top: 60px;
+}
+
+.dashboard-card {
+    text-align: center;
+}
+
+.dashboard-card h2 {
+    font-weight: bold;
+}
+
+.checkout-total {
+    font-size: 30px;
+    font-weight: bold;
+    color: #198754;
+}
+
+.struk {
+    font-family: monospace;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #777;
+}
+
+@media (max-width: 768px) {
+
+    .navbar-brand {
+        font-size: 18px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+
+}

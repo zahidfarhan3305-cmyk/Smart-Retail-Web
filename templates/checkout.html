@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white">
+
+                    <h3>
+
+                        <i class="bi bi-cash-coin"></i>
+
+                        Checkout
+
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <!-- =============================== -->
+                    <!-- Daftar Belanja -->
+                    <!-- =============================== -->
+
+                    <table class="table table-bordered">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>Produk</th>
+
+                                <th>Harga</th>
+
+                                <th>Qty</th>
+
+                                <th>Subtotal</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in keranjang %}
+
+                            <tr>
+
+                                <td>
+
+                                    {{ item.nama }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ format_rupiah(item.harga) }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ item.jumlah }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ format_rupiah(item.subtotal) }}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    <hr>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <h4>
+
+                                Total Belanja
+
+                            </h4>
+
+                        </div>
+
+                        <div class="col-md-6 text-end">
+
+                            <h3 class="text-success">
+
+                                {{ format_rupiah(total) }}
+
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <!-- =============================== -->
+                    <!-- Form Pembayaran -->
+                    <!-- =============================== -->
+
+                    <form
+
+                        method="POST"
+
+                        action="{{ url_for('transaksi.checkout') }}">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+
+                                Uang Pembayaran
+
+                            </label>
+
+                            <input
+
+                                type="number"
+
+                                name="uang_bayar"
+
+                                class="form-control"
+
+                                min="{{ total }}"
+
+                                required
+
+                                autofocus
+
+                            >
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <a
+
+                                href="{{ url_for('transaksi.halaman_transaksi') }}"
+
+                                class="btn btn-secondary">
+
+                                <i class="bi bi-arrow-left"></i>
+
+                                Kembali
+
+                            </a>
+
+                            <button
+
+                                type="submit"
+
+                                class="btn btn-success">
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Selesaikan Transaksi
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+    <i class="bi bi-speedometer2"></i>
+
+    Dashboard
+
+</h2>
+
+<div class="row">
+
+    <!-- Total Produk -->
+
+    <div class="col-md-4">
+
+        <div class="card text-white bg-primary shadow">
+
+            <div class="card-body">
+
+                <h5>Total Produk</h5>
+
+                <h2>{{ total_produk }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Total Transaksi -->
+
+    <div class="col-md-4">
+
+        <div class="card text-white bg-success shadow">
+
+            <div class="card-body">
+
+                <h5>Total Transaksi</h5>
+
+                <h2>{{ total_transaksi }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Pendapatan -->
+
+    <div class="col-md-4">
+
+        <div class="card text-white bg-warning shadow">
+
+            <div class="card-body">
+
+                <h5>Total Pendapatan</h5>
+
+                <h2>
+
+                    {{ format_rupiah(total_pendapatan) }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<hr>
+
+<div class="row mt-4">
+    
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-header">
+
+                Informasi Sistem
+
+            </div>
+
+            <div class="card-body">
+
+                <table class="table">
+
+                    <tr>
+
+                        <th>User Login</th>
+
+                        <td>{{ session["username"] }}</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Role</th>
+
+                        <td>{{ session["role"] }}</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Status</th>
+
+                        <td>
+
+                            <span class="badge bg-success">
+
+                                Online
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

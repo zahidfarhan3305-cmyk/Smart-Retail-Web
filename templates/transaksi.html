@@ -1,0 +1,599 @@
+{% extends "base.html" %}
+
+{% block title %}
+Transaksi
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- ====================================== -->
+    <!-- Header -->
+    <!-- ====================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>
+
+            <i class="bi bi-cart-check"></i>
+
+            Transaksi Penjualan
+
+        </h2>
+
+        <a
+
+            href="{{ url_for('transaksi.riwayat_transaksi') }}"
+
+            class="btn btn-primary">
+
+            <i class="bi bi-clock-history"></i>
+
+            Riwayat
+
+        </a>
+
+    </div>
+
+    <div class="row">
+
+        <!-- ====================================== -->
+        <!-- Daftar Produk -->
+        <!-- ====================================== -->
+
+        <div class="col-lg-7">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-success text-white">
+
+                    <h5>
+
+                        Daftar Produk
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        {% for item in produk %}
+
+                        <div class="col-md-6 mb-4">
+
+                            <div class="card h-100 border-primary">
+
+                                <div class="card-body">
+
+                                    <h5>
+
+                                        {{ item.nama_produk }}
+
+                                    </h5>
+
+                                    <hr>
+
+                                    <p>
+
+                                        Harga
+
+                                        <br>
+
+                                        <strong>
+
+                                            {{ format_rupiah(item.harga_jual) }}
+
+                                        </strong>
+
+                                    </p>
+
+                                    <p>
+
+                                        Stok
+
+                                        {% if item.stok <= 5 %}
+
+                                        <span class="badge bg-danger">
+
+                                            {{ item.stok }}
+
+                                        </span>
+
+                                        {% else %}
+
+                                        <span class="badge bg-success">
+
+                                            {{ item.stok }}
+
+                                        </span>
+
+                                        {% endif %}
+
+                                    </p>
+
+                                    <form
+
+                                        method="POST"
+
+                                        action="{{ url_for('transaksi.tambah_keranjang', id=item.id) }}">
+
+                                        <div class="input-group">
+
+                                            <input
+
+                                                type="number"
+
+                                                name="jumlah"
+
+                                                class="form-control"
+
+                                                min="1"
+
+                                                value="1"
+
+                                                required
+
+                                            >
+
+                                            <button
+
+                                                class="btn btn-success"
+
+                                                type="submit">
+
+                                                <i class="bi bi-cart-plus"></i>
+
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+            <!-- ====================================== -->
+        <!-- Keranjang Belanja -->
+        <!-- ====================================== -->
+
+        <div class="col-lg-5">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h5>
+
+                        <i class="bi bi-cart3"></i>
+
+                        Keranjang Belanja
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% if keranjang %}
+
+                    <table class="table table-bordered align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Produk</th>
+
+                                <th class="text-center">Qty</th>
+
+                                <th>Subtotal</th>
+
+                                <th>Aksi</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in keranjang %}
+
+                            <tr>
+
+                                <td>
+
+                                    <strong>
+
+                                        {{ item.nama }}
+
+                                    </strong>
+
+                                    <br>
+
+                                    <small>
+
+                                        {{ format_rupiah(item.harga) }}
+
+                                    </small>
+
+                                </td>
+
+                                <td class="text-center">
+
+                                    {{ item.jumlah }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ format_rupiah(item.subtotal) }}
+
+                                </td>
+
+                                <td>
+
+                                    <!-- Tambah -->
+
+                                    <form
+
+                                        action="{{ url_for('transaksi.tambah_jumlah', id=item.id) }}"
+
+                                        method="POST"
+
+                                        style="display:inline;">
+
+                                        <button
+
+                                            class="btn btn-success btn-sm"
+
+                                            type="submit">
+
+                                            <i class="bi bi-plus"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                    <!-- Kurangi -->
+
+                                    <form
+
+                                        action="{{ url_for('transaksi.kurang_jumlah', id=item.id) }}"
+
+                                        method="POST"
+
+                                        style="display:inline;">
+
+                                        <button
+
+                                            class="btn btn-warning btn-sm"
+
+                                            type="submit">
+
+                                            <i class="bi bi-dash"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                    <!-- Hapus -->
+
+                                    <form
+
+                                        action="{{ url_for('transaksi.hapus_item', id=item.id) }}"
+
+                                        method="POST"
+
+                                        style="display:inline;">
+
+                                        <button
+
+                                            class="btn btn-danger btn-sm"
+
+                                            type="submit"
+
+                                            onclick="return confirm('Hapus produk dari keranjang?')">
+
+                                            <i class="bi bi-trash"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                    {% else %}
+
+                    <div class="alert alert-warning text-center">
+
+                        <i class="bi bi-cart-x"></i>
+
+                        <br><br>
+
+                        Keranjang masih kosong.
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+<!-- Ringkasan Transaksi -->
+<!-- ====================================== -->
+
+<div class="row mt-4">
+
+    <div class="col-lg-12">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-dark text-white">
+
+                <h5>
+
+                    <i class="bi bi-receipt"></i>
+
+                    Ringkasan Transaksi
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-8">
+
+                        <h4>
+
+                            Total Belanja
+
+                        </h4>
+
+                        <h2 class="text-success">
+
+                            {{ format_rupiah(total) }}
+
+                        </h2>
+
+                    </div>
+
+                    <div class="col-md-4 text-end">
+
+                        {% if keranjang %}
+
+                        <form
+
+                            action="{{ url_for('transaksi.kosongkan_keranjang') }}"
+
+                            method="POST"
+
+                            style="display:inline;">
+
+                            <button
+
+                                class="btn btn-danger"
+
+                                onclick="return confirm('Kosongkan seluruh keranjang?')">
+
+                                <i class="bi bi-trash"></i>
+
+                                Kosongkan
+
+                            </button>
+
+                        </form>
+
+                        <a
+
+                            href="{{ url_for('transaksi.checkout') }}"
+
+                            class="btn btn-success">
+
+                            <i class="bi bi-cash-stack"></i>
+
+                            Checkout
+
+                        </a>
+
+                        {% else %}
+
+                        <button
+
+                            class="btn btn-secondary"
+
+                            disabled>
+
+                            Keranjang Kosong
+
+                        </button>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ====================================== -->
+<!-- Ringkasan Item -->
+<!-- ====================================== -->
+
+<div class="row mt-3">
+
+    <div class="col-lg-12">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-info text-white">
+
+                <h5>
+
+                    <i class="bi bi-info-circle"></i>
+
+                    Ringkasan
+
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row text-center">
+
+                    <div class="col-md-4">
+
+                        <h3>
+
+                            {{ keranjang|length }}
+
+                        </h3>
+
+                        <p>
+
+                            Jenis Produk
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <h3>
+
+                            {% set total_qty = namespace(jumlah=0) %}
+
+                            {% for item in keranjang %}
+
+                                {% set total_qty.jumlah =
+                                total_qty.jumlah + item.jumlah %}
+
+                            {% endfor %}
+
+                            {{ total_qty.jumlah }}
+
+                        </h3>
+
+                        <p>
+
+                            Total Barang
+
+                        </p>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <h3 class="text-success">
+
+                            {{ format_rupiah(total) }}
+
+                        </h3>
+
+                        <p>
+
+                            Total Pembayaran
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ====================================== -->
+<!-- CSS Tambahan -->
+<!-- ====================================== -->
+
+<style>
+
+.card.border-primary{
+
+    transition:0.3s;
+
+}
+
+.card.border-primary:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+
+}
+
+.table td{
+
+    vertical-align:middle;
+
+}
+
+</style>
+
+<!-- ====================================== -->
+<!-- JavaScript -->
+<!-- ====================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    // Fokus otomatis ke input jumlah pertama
+    const input=document.querySelector("input[name='jumlah']");
+
+    if(input){
+
+        input.focus();
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

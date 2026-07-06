@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}
+Laporan Bulanan
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">
+
+        <i class="bi bi-calendar-month"></i>
+
+        Laporan Bulanan
+
+    </h2>
+
+    <!-- ====================================== -->
+    <!-- Filter Bulan -->
+    <!-- ====================================== -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <form
+                method="GET"
+                action="{{ url_for('laporan.laporan_bulanan') }}">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+
+                            Pilih Bulan
+
+                        </label>
+
+                        <input
+
+                            type="month"
+
+                            name="bulan"
+
+                            value="{{ bulan }}"
+
+                            class="form-control"
+
+                        >
+
+                    </div>
+
+                    <div class="col-md-8 d-flex align-items-end">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary me-2">
+
+                            <i class="bi bi-search"></i>
+
+                            Tampilkan
+
+                        </button>
+
+                        <a
+
+                            href="{{ url_for('laporan.export_bulanan', bulan=bulan) }}"
+
+                            class="btn btn-success">
+
+                            <i class="bi bi-download"></i>
+
+                            Export CSV
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Tabel Transaksi -->
+    <!-- ====================================== -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            Daftar Transaksi Bulanan
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>No</th>
+
+                            <th>Tanggal</th>
+
+                            <th>Kasir</th>
+
+                            <th>Total</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in transaksi %}
+
+                        <tr>
+
+                            <td>
+
+                                {{ loop.index }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.tanggal }}
+
+                            </td>
+
+                            <td>
+
+                                {{ item.username }}
+
+                            </td>
+
+                            <td>
+
+                                {{ format_rupiah(item.total_bayar) }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% if not transaksi %}
+
+            <div class="alert alert-warning text-center">
+
+                Tidak ada transaksi pada bulan tersebut.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Ringkasan -->
+    <!-- ====================================== -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-body">
+
+            <div class="row text-center">
+
+                <div class="col-md-6">
+
+                    <h5>
+
+                        Jumlah Transaksi
+
+                    </h5>
+
+                    <h2>
+
+                        {{ transaksi|length }}
+
+                    </h2>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <h5>
+
+                        Total Pendapatan
+
+                    </h5>
+
+                    <h2 class="text-success">
+
+                        {{ format_rupiah(total) }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

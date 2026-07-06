@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}
+Ringkasan Penjualan
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">
+
+        <i class="bi bi-clipboard-data-fill"></i>
+
+        Ringkasan Penjualan
+
+    </h2>
+
+    <!-- ============================= -->
+    <!-- Statistik -->
+    <!-- ============================= -->
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h6>Jumlah Transaksi</h6>
+
+                    <h2 class="text-primary">
+
+                        {{ jumlah_transaksi }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h6>Total Pendapatan</h6>
+
+                    <h2 class="text-success">
+
+                        {{ format_rupiah(total) }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h6>Jumlah Produk Aktif</h6>
+
+                    <h2 class="text-info">
+
+                        {{ produk }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h6>Total Produk Terjual</h6>
+
+                    <h2 class="text-warning">
+
+                        {{ total_produk_terjual }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body text-center">
+
+                    <h6>Rata-rata Penjualan</h6>
+
+                    <h2 class="text-danger">
+
+                        {{ format_rupiah(rata_rata) }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ============================= -->
+    <!-- Produk Terlaris -->
+    <!-- ============================= -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-success text-white">
+
+            <i class="bi bi-trophy-fill"></i>
+
+            Top 5 Produk Terlaris
+
+        </div>
+
+        <div class="card-body">
+
+            {% if produk_terlaris %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th width="70">No</th>
+
+                            <th>Nama Produk</th>
+
+                            <th class="text-center">
+
+                                Jumlah Terjual
+
+                            </th>
+
+                            <th class="text-end">
+
+                                Total Penjualan
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in produk_terlaris %}
+
+                        <tr>
+
+                            <td>{{ loop.index }}</td>
+
+                            <td>{{ item["nama_produk"] }}</td>
+
+                            <td class="text-center">
+
+                                {{ item["jumlah_terjual"] }}
+
+                            </td>
+
+                            <td class="text-end">
+
+                                {{ format_rupiah(item["total_penjualan"]) }}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="alert alert-warning text-center mb-0">
+
+                Belum ada data penjualan.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

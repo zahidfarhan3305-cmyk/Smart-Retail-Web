@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}
+Detail Produk
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-info text-white">
+
+                    <h4>
+
+                        <i class="bi bi-box-seam"></i>
+
+                        Detail Produk
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered">
+
+                        <tr>
+
+                            <th width="35%">
+
+                                ID Produk
+
+                            </th>
+
+                            <td>
+
+                                {{ produk.id }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Nama Produk
+
+                            </th>
+
+                            <td>
+
+                                {{ produk.nama_produk }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Harga Modal
+
+                            </th>
+
+                            <td>
+
+                                {{ format_rupiah(produk.harga_modal) }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Harga Jual
+
+                            </th>
+
+                            <td>
+
+                                {{ format_rupiah(produk.harga_jual) }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Keuntungan / Produk
+
+                            </th>
+
+                            <td>
+
+                                {{ format_rupiah(produk.harga_jual - produk.harga_modal) }}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                Stok
+
+                            </th>
+
+                            <td>
+
+                                {% if produk.stok == 0 %}
+
+                                <span class="badge bg-dark">
+
+                                    Habis
+
+                                </span>
+
+                                {% elif produk.stok <= 5 %}
+
+                                <span class="badge bg-danger">
+
+                                    {{ produk.stok }}
+
+                                    (Menipis)
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-success">
+
+                                    {{ produk.stok }}
+
+                                    (Aman)
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+                <div class="card-footer d-flex justify-content-between">
+
+                    <a
+
+                        href="{{ url_for('produk.daftar_produk') }}"
+
+                        class="btn btn-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        Kembali
+
+                    </a>
+
+                    <a
+
+                        href="{{ url_for('produk.edit_produk', id=produk.id) }}"
+
+                        class="btn btn-warning">
+
+                        <i class="bi bi-pencil-square"></i>
+
+                        Edit Produk
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

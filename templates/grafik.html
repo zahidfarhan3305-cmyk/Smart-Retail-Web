@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard Grafik
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">
+
+        <i class="bi bi-bar-chart-line-fill"></i>
+
+        Dashboard Grafik Penjualan
+
+    </h2>
+
+    <!-- ====================================== -->
+    <!-- Filter -->
+    <!-- ====================================== -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <form method="GET">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+
+                            Tahun
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="tahun"
+                            class="form-control"
+                            min="2020"
+                            max="2100"
+                            value="{{ tahun if tahun else '' }}"
+                            placeholder="Contoh : 2026">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+
+                            Bulan
+
+                        </label>
+
+                        <select
+                            name="bulan"
+                            class="form-select">
+
+                            <option value="">
+                                Semua Bulan
+                            </option>
+
+                            {% for i in range(1,13) %}
+
+                            <option
+                                value="{{ i }}"
+                                {% if request.args.get("bulan")==i|string %}
+                                selected
+                                {% endif %}>
+
+                                {{ "%02d"|format(i) }}
+
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-4 d-flex align-items-end">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            <i class="bi bi-search"></i>
+
+                            Tampilkan
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Grafik Bulanan -->
+    <!-- ====================================== -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header bg-primary text-white">
+
+            <i class="bi bi-bar-chart-fill"></i>
+
+            Grafik Pendapatan Bulanan
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <img
+
+                src="{{ url_for(
+                    'grafik.grafik_bulanan',
+                    tahun=request.args.get('tahun')
+                ) }}"
+
+                class="img-fluid"
+
+                alt="Grafik Bulanan">
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Grafik Harian -->
+    <!-- ====================================== -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-success text-white">
+
+            <i class="bi bi-graph-up-arrow"></i>
+
+            Grafik Pendapatan Harian
+
+        </div>
+
+        <div class="card-body text-center">
+
+            <img
+
+                src="{{ url_for(
+                    'grafik.grafik_harian',
+                    tahun=request.args.get('tahun'),
+                    bulan=request.args.get('bulan')
+                ) }}"
+
+                class="img-fluid"
+
+                alt="Grafik Harian">
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

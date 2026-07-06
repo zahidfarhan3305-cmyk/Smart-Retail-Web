@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}
+Laporan
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">
+
+        <i class="bi bi-file-earmark-bar-graph"></i>
+
+        Dashboard Laporan
+
+    </h2>
+
+    <!-- ===================================== -->
+    <!-- Statistik -->
+    <!-- ===================================== -->
+
+    <div class="row">
+
+        <div class="col-md-4">
+
+            <div class="card text-white bg-primary shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>
+
+                        Total Produk
+
+                    </h5>
+
+                    <h2>
+
+                        {{ total_produk }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card text-white bg-success shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>
+
+                        Total Transaksi
+
+                    </h5>
+
+                    <h2>
+
+                        {{ total_transaksi }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card text-white bg-warning shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>
+
+                        Total Pendapatan
+
+                    </h5>
+
+                    <h3>
+
+                        {{ format_rupiah(total_pendapatan) }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Menu Laporan -->
+    <!-- ===================================== -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-dark text-white">
+
+            Menu Laporan
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+
+                    <a
+
+                        href="{{ url_for('laporan.laporan_harian') }}"
+
+                        class="btn btn-primary w-100">
+
+                        <i class="bi bi-calendar-day"></i>
+
+                        Laporan Harian
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a
+
+                        href="{{ url_for('laporan.laporan_bulanan') }}"
+
+                        class="btn btn-success w-100">
+
+                        <i class="bi bi-calendar-month"></i>
+
+                        Laporan Bulanan
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a
+
+                        href="{{ url_for('laporan.export_csv') }}"
+
+                        class="btn btn-info w-100">
+
+                        <i class="bi bi-filetype-csv"></i>
+
+                        Export CSV
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a
+
+                        href="{{ url_for('laporan.export_pdf') }}"
+
+                        class="btn btn-danger w-100">
+
+                        <i class="bi bi-file-earmark-pdf"></i>
+
+                        Export PDF
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Menu Tambahan -->
+    <!-- ===================================== -->
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header bg-secondary text-white">
+
+            Menu Tambahan
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+
+                <div class="col-md-6">
+
+                    <a
+
+                        href="{{ url_for('laporan.ringkasan') }}"
+
+                        class="btn btn-outline-primary w-100" style="position: sticky;">
+
+                        <i class="bi bi-bar-chart" "></i>
+
+                        Ringkasan Penjualan
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}
+Tambah Produk
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">
+
+        <i class="bi bi-plus-circle-fill"></i>
+
+        Tambah Produk
+
+    </h2>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Nama Produk
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nama_produk"
+                        class="form-control"
+                        placeholder="Masukkan nama produk"
+                        required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Harga Modal
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="harga_modal"
+                        class="form-control"
+                        min="0"
+                        placeholder="0"
+                        required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+
+                        Harga Jual
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="harga_jual"
+                        class="form-control"
+                        min="0"
+                        placeholder="0"
+                        required>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+
+                        Stok
+
+                    </label>
+
+                    <input
+                        type="number"
+                        name="stok"
+                        class="form-control"
+                        min="0"
+                        placeholder="0"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Simpan Produk
+
+                </button>
+
+                <a
+                    href="{{ url_for('produk.daftar_produk') }}"
+                    class="btn btn-secondary">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Kembali
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

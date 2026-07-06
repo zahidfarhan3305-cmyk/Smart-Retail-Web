@@ -1,0 +1,396 @@
+{% extends "base.html" %}
+
+{% block title %}
+Data Produk
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <h2 class="mb-4">
+
+        <i class="bi bi-box-seam-fill"></i>
+
+        Data Produk
+
+    </h2>
+
+    <!-- ====================================== -->
+    <!-- Pencarian -->
+    <!-- ====================================== -->
+
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <form
+                method="GET"
+                action="{{ url_for('produk.daftar_produk') }}">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <input
+
+                            type="text"
+
+                            class="form-control"
+
+                            name="keyword"
+
+                            placeholder="Cari nama produk..."
+
+                            value="{{ keyword }}">
+
+                    </div>
+
+                    <div class="col-md-6 text-end">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            <i class="bi bi-search"></i>
+
+                            Cari
+
+                        </button>
+
+                        <a
+
+                            href="{{ url_for('produk.tambah_produk') }}"
+
+                            class="btn btn-success">
+
+                            <i class="bi bi-plus-circle"></i>
+
+                            Tambah Produk
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Tabel Produk -->
+    <!-- ====================================== -->
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            Daftar Produk
+
+        </div>
+
+        <div class="card-body">
+
+            {% if produk %}
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th width="60">
+
+                                No
+
+                            </th>
+
+                            <th>
+
+                                Nama Produk
+
+                            </th>
+
+                            <th class="text-end">
+
+                                Harga Modal
+
+                            </th>
+
+                            <th class="text-end">
+
+                                Harga Jual
+
+                            </th>
+
+                            <th class="text-center">
+
+                                Stok
+
+                            </th>
+
+                            <th class="text-center">
+
+                                Status Stok
+
+                            </th>
+
+                            <th class="text-center">
+
+                                Status Produk
+
+                            </th>
+
+                            <th width="220">
+
+                                Aksi
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        {% for item in produk %}
+
+<tr>
+
+    <td>
+
+        {{ loop.index }}
+
+    </td>
+
+    <td>
+
+        {{ item["nama_produk"] }}
+
+    </td>
+
+    <td class="text-end">
+
+        {{ format_rupiah(item["harga_modal"]) }}
+
+    </td>
+
+    <td class="text-end">
+
+        {{ format_rupiah(item["harga_jual"]) }}
+
+    </td>
+
+    <td class="text-center">
+
+        {{ item["stok"] }}
+
+    </td>
+
+    <!-- ====================================== -->
+    <!-- Status Stok -->
+    <!-- ====================================== -->
+
+    <td class="text-center">
+
+        {% if item["stok"] == 0 %}
+
+            <span class="badge bg-danger">
+
+                Habis
+
+            </span>
+
+        {% elif item["stok"] < 10 %}
+
+            <span class="badge bg-warning text-dark">
+
+                Hampir Habis
+
+            </span>
+
+        {% else %}
+
+            <span class="badge bg-success">
+
+                Aman
+
+            </span>
+
+        {% endif %}
+
+    </td>
+
+    <!-- ====================================== -->
+    <!-- Status Produk -->
+    <!-- ====================================== -->
+
+    <td class="text-center">
+
+        {% if item["status"] == "Aktif" %}
+
+            <span class="badge bg-success">
+
+                Aktif
+
+            </span>
+
+        {% else %}
+
+            <span class="badge bg-secondary">
+
+                Nonaktif
+
+            </span>
+
+        {% endif %}
+
+    </td>
+
+    <!-- ====================================== -->
+    <!-- Aksi -->
+    <!-- ====================================== -->
+
+    <td>
+                <a
+
+            href="{{ url_for('produk.edit_produk', id=item['id']) }}"
+
+            class="btn btn-warning btn-sm">
+
+            <i class="bi bi-pencil-square"></i>
+
+            Edit
+
+        </a>
+
+        {% if item["status"] == "Aktif" %}
+
+        <a
+
+            href="{{ url_for('produk.nonaktif_produk', id=item['id']) }}"
+
+            class="btn btn-danger btn-sm"
+
+            onclick="return confirm('Yakin ingin menonaktifkan produk ini?')">
+
+            <i class="bi bi-slash-circle"></i>
+
+            Nonaktif
+
+        </a>
+
+        {% else %}
+
+        <a
+
+            href="{{ url_for('produk.aktifkan_produk', id=item['id']) }}"
+
+            class="btn btn-success btn-sm"
+
+            onclick="return confirm('Aktifkan kembali produk ini?')">
+
+            <i class="bi bi-check-circle"></i>
+
+            Aktifkan
+
+        </a>
+
+        {% endif %}
+
+    </td>
+
+</tr>
+
+{% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- ====================================== -->
+            <!-- Ringkasan Stok -->
+            <!-- ====================================== -->
+
+            <div class="row mt-4">
+
+                <div class="col-md-4">
+
+                    <div class="alert alert-success text-center">
+
+                        <strong>
+
+                            🟢 Aman
+
+                        </strong>
+
+                        <br>
+
+                        Stok lebih dari 10
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="alert alert-warning text-center">
+
+                        <strong>
+
+                            🟡 Hampir Habis
+
+                        </strong>
+
+                        <br>
+
+                        Stok 1 - 10
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="alert alert-danger text-center">
+
+                        <strong>
+
+                            🔴 Habis
+
+                        </strong>
+
+                        <br>
+
+                        Stok = 0
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="alert alert-warning text-center">
+
+                <i class="bi bi-exclamation-circle"></i>
+
+                Belum ada data produk.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
